@@ -1,0 +1,18 @@
+
+services:
+  verda-agent:
+    build:
+      context: ../agent
+      dockerfile: Dockerfile
+    container_name: verda-agent
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      # Model mounted at runtime (read-only)
+      - ../agent/models:/app/models:ro
+
+      # Care data (read-only)
+      - ../agent/data:/app/data:ro
+    restart: unless-stopped
